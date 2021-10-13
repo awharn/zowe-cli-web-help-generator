@@ -1,0 +1,40 @@
+{
+    "name": "zowe",
+    "version": "0.0.1",
+    "description": "framework for compiling a web-help from a command tree",
+    "author": "",
+    "license": "EPL-2.0",
+    "private": true,
+    "homepage": "https://github.com/zowe/imperative#readme",
+    "bugs": {
+        "url": "https://github.com/zowe/imperative/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/zowe/imperative.git"
+    },
+    "keywords": [
+        "CLI",
+        "framework",
+        "zowe"
+    ],
+    "files": [],
+    "publishConfig": {
+        "registry": "https://zowe.jfrog.io/zowe/api/npm/npm-local-release/"
+    },
+    "scripts": {
+        "build": "tsc src/generate.ts --outDir lib",
+        "generate": "npm run generate:commandTree && npm run generate:webHelp",
+        "generate:commandTree": "npx zowe --ac --rfj > commandTree.json",
+        "generate:webHelp": "node lib/generate.js commandTree.json"
+    },
+    "devDependencies": {
+        "@zowe/cli": "6.34.1",
+        "@zowe/imperative": "^4.16.2",
+        "ts-node": "^10.3.0"
+    },
+    "engines": {
+        "node": ">=12.0.0"
+    },
+    "bin": "zowe"
+}
