@@ -11,7 +11,7 @@ To install the necessary components, run `npm install`.
 To add your conformant plug-in's commands, please perform the following steps:
 
 1. Ensure the plug-in that you would like to include is installed in Zowe CLI.
-2. Copy the template file `zowe.template.json` to `zowe.json`. This file is ignored by git. Customize this file to include the command group(s) of your plugin(s), and the name(s) of your profiles, like the following:
+2. Copy the template file `zowe.template.json` to `zowe.json`. This file is ignored by git. Customize this file to include the command group(s) of your plugin(s), and the name(s) of your profile(s), like the following:
 
         {
           "commandGroups": ["zos-files", "zos-jobs"],
