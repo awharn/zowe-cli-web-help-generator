@@ -1,13 +1,12 @@
-import {readFileSync, writeFileSync} from "fs";
-import {argv} from "process";
-import {join} from "path";
-import {WebHelpGenerator, Imperative, ImperativeConfig, IHandlerResponseApi, HandlerResponse, CommandResponse} from "@zowe/imperative";
-import {getImperativeConfig} from "@zowe/cli";
+import { readFileSync, writeFileSync } from "fs";
+import { join } from "path";
+import { WebHelpGenerator, Imperative, ImperativeConfig, IHandlerResponseApi, HandlerResponse, CommandResponse } from "@zowe/imperative";
+import { getImperativeConfig } from "@zowe/cli";
 
 (async() => {
     // Set up the environment and build the command tree
     const zoweVer = "1.25.0"
-    const filePath = argv[2];
+    const filePath = join(__dirname, "../", "commandTree.json");
     const localWebHelpDir = join(__dirname, "../", "generatedWebHelp");
     const fullCommandTree = readFileSync(filePath).toString();
     const fullCommandTreeJson = JSON.parse(fullCommandTree).data;

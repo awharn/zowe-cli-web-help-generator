@@ -23,14 +23,17 @@
         "registry": "https://zowe.jfrog.io/zowe/api/npm/npm-local-release/"
     },
     "scripts": {
-        "build": "tsc src/generate.ts --outDir lib",
+        "clean": "rimraf commandTree.json package-lock.json generatedWebHelp",
         "generate": "npm run generate:commandTree && npm run generate:webHelp",
         "generate:commandTree": "npx zowe --ac --rfj > commandTree.json",
-        "generate:webHelp": "node lib/generate.js commandTree.json"
+        "generate:webHelp": "ts-node scripts/generate.ts",
+        "merge": "ts-node scripts/merge.ts",
+        "trim": "ts-node scripts/trim.ts"
     },
     "devDependencies": {
-        "@zowe/cli": "6.34.1",
+        "@zowe/cli": "^6.34.1",
         "@zowe/imperative": "^4.16.2",
+        "rimraf": "^3.0.2",
         "ts-node": "^10.3.0"
     },
     "engines": {

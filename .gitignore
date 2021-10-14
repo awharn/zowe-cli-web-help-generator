@@ -1,5 +1,7 @@
 generatedWebHelp/
 lib/
 node_modules/
+prototyping-dir/
 package-lock.json
 commandTree.json
+zowe.json
