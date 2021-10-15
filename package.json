@@ -25,7 +25,7 @@
     "scripts": {
         "clean": "rimraf commandTree.json package-lock.json generatedWebHelp",
         "generate": "npm run generate:commandTree && npm run generate:webHelp",
-        "generate:commandTree": "npx zowe --ac --rfj > commandTree.json",
+        "generate:commandTree": "npx zowe --ac --rfj > commandTree.json && echo 'Command Tree generated successfully.'",
         "generate:webHelp": "ts-node scripts/generate.ts",
         "merge": "ts-node scripts/merge.ts",
         "trim": "ts-node scripts/trim.ts"
