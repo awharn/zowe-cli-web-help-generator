@@ -22,7 +22,7 @@ jobs:
 
     - name: Install Node Package Dependencies
       id: install
-      run: npm ci
+      run: npm i
 
     - name: Build Source
       id: build
