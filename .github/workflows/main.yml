@@ -1,0 +1,41 @@
+name: webhelp-doc
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    if: (github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository) && !contains(github.event.head_commit.message, '[ci skip]')
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: lts/*
+
+    # - name: Use NPM v7
+    #   id: npm7
+    #   run: npm install -g npm@^7
+
+    - name: Install Node Package Dependencies
+      id: install
+      run: npm ci
+
+    - name: Build Source
+      id: build
+      run: npm run build --if-present
+
+    - name: Archive Results
+      id: upload
+      if: ${{ always() && steps.build.outcome == 'success' }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: results
+        path: |
+          commandTree.json
+          generatedWebHelp/
+          commandGroups/
+          profiles/
