@@ -28,14 +28,16 @@
         "contribute": "npm run retrieveCommandTree && npm run trim",
         "retrieveCommandTree": "npx zowe --ac --rfj > commandTree.json && echo 'Command Tree generated successfully.'",
         "generateWebHelp": "ts-node scripts/generate.ts",
-        "mergeCommandTrees": "ts-node scripts/merge.ts",
         "lint": "eslint \"scripts/*.ts\"",
         "license": "node scripts/updateLicense.js",
+        "mergeCommandTrees": "ts-node scripts/merge.ts",
+        "prepare": "husky install",
         "trim": "ts-node scripts/trim.ts"
     },
     "dependencies": {
         "@zowe/cli": "6.34.1",
         "@zowe/imperative": "4.16.2",
+        "husky": "^7.0.2",
         "ts-node": "10.3.0"
     },
     "devDependencies": {
