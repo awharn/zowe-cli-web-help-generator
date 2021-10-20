@@ -37,8 +37,8 @@
     },
     "dependencies": {
         "@types/node": "^16.11.1",
-        "@zowe/cli": "6.34.1",
-        "@zowe/imperative": "4.16.2",
+        "@zowe/cli": "6.36.0",
+        "@zowe/imperative": "4.17.0",
         "husky": "^7.0.2",
         "ts-node": "^10.3.0",
         "typescript": "^4.4.4"
