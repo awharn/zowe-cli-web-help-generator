@@ -2,10 +2,11 @@ import { readFileSync, writeFileSync } from "fs";
 import { join } from "path";
 import { WebHelpGenerator, Imperative, ImperativeConfig, IHandlerResponseApi, HandlerResponse, CommandResponse } from "@zowe/imperative";
 import { getImperativeConfig } from "@zowe/cli";
+import { argv } from "process";
 
 (async() => {
     // Set up the environment and build the command tree
-    const zoweVer = "1.25.0"
+    const zoweVer = argv[2] || "v1-lts"
     const filePath = join(__dirname, "../", "commandTree.json");
     const localWebHelpDir = join(__dirname, "../", "generatedWebHelp");
     const fullCommandTree = readFileSync(filePath).toString();
@@ -26,7 +27,7 @@ import { getImperativeConfig } from "@zowe/cli";
     // Update the tree data to have our release information
     const treeDataPath = join(__dirname, "..", "generatedWebHelp", "tree-data.js")
     const treeData = readFileSync(treeDataPath).toString();
-    const modifiedTreeData = treeData.replace("zowe 0.0.1", `Zowe v${zoweVer}`);
+    const modifiedTreeData = treeData.replace("zowe 0.0.1", `Release: Zowe ${zoweVer}`);
     writeFileSync(treeDataPath, modifiedTreeData);
 
     console.log("Output located in " + localWebHelpDir);
