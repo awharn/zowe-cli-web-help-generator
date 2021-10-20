@@ -36,6 +36,7 @@
         "trim": "ts-node scripts/trim.ts"
     },
     "dependencies": {
+        "@types/node": "^16.11.1",
         "@zowe/cli": "6.34.1",
         "@zowe/imperative": "4.16.2",
         "husky": "^7.0.2",
