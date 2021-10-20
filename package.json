@@ -24,6 +24,7 @@
     },
     "scripts": {
         "build": "npm run retrieveCommandTree && npm run mergeCommandTrees && npm run generateWebHelp",
+        "build:local": "zowe --ac --rfj > commandTree.json && echo 'Command Tree generated successfully.' && npm run mergeCommandTrees && npm run generateWebHelp",
         "clean": "rimraf commandTree.json package-lock.json generatedWebHelp",
         "contribute": "npm run retrieveCommandTree && npm run trim",
         "retrieveCommandTree": "npx zowe --ac --rfj > commandTree.json && echo 'Command Tree generated successfully.'",
@@ -38,7 +39,8 @@
         "@zowe/cli": "6.34.1",
         "@zowe/imperative": "4.16.2",
         "husky": "^7.0.2",
-        "ts-node": "10.3.0"
+        "ts-node": "^10.3.0",
+        "typescript": "^4.4.4"
     },
     "devDependencies": {
         "@typescript-eslint/eslint-plugin": "^4.29.0",
