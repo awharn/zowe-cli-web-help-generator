@@ -19,13 +19,10 @@ To add your conformant plug-in's commands, please perform the following steps:
         }
     *Note: No @zowe scoped plug-ins should be included in this repository, and the above is merely for demonstration purposes.*
 
-3. Run the `npm run generate:commandTree` command. This will generate the CLI command tree.
-4. Run the `npm run trim` command. This will extract the above command group(s) and profile(s) to the commandGroups and profiles directories.
-5. Commit the newly created files. Ensure the commit is signed off.
+3. Run the `npm run contribute` command. This will retrieve the CLI command tree from Zowe CLI and all installed plug-ins, and extract the above command group(s) and profile(s) to the commandGroups and profiles directories.
+4. Commit the newly created files. Ensure the commit is signed off.
 
 ## Using - Generating the Web Help
 
 1. Install the CLI, and all @zowe scoped plug-ins. The CLI can also be accessed in this repository with `npx zowe`. 
-2. Run the `npm run generate:commandTree` command. This will generate the CLI command tree from the CLI and @zowe packages.
-3. Run the `npm run merge` command. This will merge all of the command groups in the defined folders.
-4. Run the `npm run generate:webHelp` command. This will generate the web help in the generatedWebHelp directory.
+2. Run the `npm run build` command. This will generate the CLI command tree from the CLI and @zowe packages, merge all of the command groups in the defined folders, and generate the web help in the generatedWebHelp directory.
