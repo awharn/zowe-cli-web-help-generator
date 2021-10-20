@@ -30,7 +30,7 @@
         "generateWebHelp": "ts-node scripts/generate.ts",
         "mergeCommandTrees": "ts-node scripts/merge.ts",
         "lint": "eslint \"scripts/*.ts\"",
-        "license": "gulp updateLicense",
+        "license": "node scripts/updateLicense.js",
         "trim": "ts-node scripts/trim.ts"
     },
     "dependencies": {
@@ -46,7 +46,6 @@
         "eslint-plugin-unused-imports": "^1.1.5",
         "fancy-log": "^1.3.3",
         "glob": "^7.2.0",
-        "gulp": "^4.0.2",
         "rimraf": "^3.0.2",
         "shebang-regex": "^3.0.0"
     },
