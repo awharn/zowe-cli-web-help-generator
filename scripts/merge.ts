@@ -1,3 +1,14 @@
+/*
+* This program and the accompanying materials are made available under the terms of the
+* Eclipse Public License v2.0 which accompanies this distribution, and is available at
+* https://www.eclipse.org/legal/epl-v20.html
+*
+* SPDX-License-Identifier: EPL-2.0
+*
+* Copyright Contributors to the Zowe Project.
+*
+*/
+
 import { readdirSync, readFileSync, writeFileSync } from "fs";
 import { join } from "path";
 
@@ -25,10 +36,10 @@ import { join } from "path";
             if (compareGroup.name === commandGroup.name) { conflict = true; }
         }
 
-        if (!conflict) { 
-            commandTree.children.push(commandGroup); // This is not pushing objects onto the array.....
+        if (!conflict) {
+            commandTree.children.push(commandGroup);
             console.log("Command group " + commandGroup.name + " added successfully.");
-        } else { 
+        } else {
             console.log("Command group " + commandGroup.name + " was not added due to a conflicting command group.");
         }
     }
@@ -45,7 +56,7 @@ import { join } from "path";
                         for (const compareProfile of child.children) {
                             if (profile.name === compareProfile.name) { conflict = true; }
                         }
-                        if (!conflict) { 
+                        if (!conflict) {
                             child.children.push(profile);
                             console.log("Profile " + profile.name + " was added to profiles create successfully.");
                         } else {
@@ -60,7 +71,7 @@ import { join } from "path";
                         for (const compareProfile of child.children) {
                             if (profile.name === compareProfile.name) { conflict = true; }
                         }
-                        if (!conflict) { 
+                        if (!conflict) {
                             child.children.push(profile);
                             console.log("Profile " + profile.name + " was added to profiles delete successfully.");
                         } else {
@@ -75,7 +86,7 @@ import { join } from "path";
                         for (const compareProfile of child.children) {
                             if (profile.name === compareProfile.name) { conflict = true; }
                         }
-                        if (!conflict) { 
+                        if (!conflict) {
                             child.children.push(profile);
                             console.log("Profile " + profile.name + " was added to profiles list successfully.");
                         } else {
@@ -90,7 +101,7 @@ import { join } from "path";
                         for (const compareProfile of child.children) {
                             if (profile.name === compareProfile.name) { conflict = true; }
                         }
-                        if (!conflict) { 
+                        if (!conflict) {
                             child.children.push(profile);
                             console.log("Profile " + profile.name + " was added to profiles set-default successfully.");
                         } else {
@@ -105,7 +116,7 @@ import { join } from "path";
                         for (const compareProfile of child.children) {
                             if (profile.name === compareProfile.name) { conflict = true; }
                         }
-                        if (!conflict) { 
+                        if (!conflict) {
                             child.children.push(profile);
                             console.log("Profile " + profile.name + " was added to profiles update successfully.");
                         } else {

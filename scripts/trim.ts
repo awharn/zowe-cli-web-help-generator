@@ -1,3 +1,14 @@
+/*
+* This program and the accompanying materials are made available under the terms of the
+* Eclipse Public License v2.0 which accompanies this distribution, and is available at
+* https://www.eclipse.org/legal/epl-v20.html
+*
+* SPDX-License-Identifier: EPL-2.0
+*
+* Copyright Contributors to the Zowe Project.
+*
+*/
+
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 import { join, resolve } from "path";
 
@@ -57,7 +68,11 @@ import { join, resolve } from "path";
                             if (profileType.name === profileSearching) {
                                 // We found the requested profile. Save it and break out of the inner loop.
                                 const profilesCreateFilePath = join(profilesCreateDirectory, profileSearching + ".json");
-                                writeFileSync(profilesCreateFilePath, JSON.stringify(profileType, (key, value) => (key !== "handler") ? value : "", 2));
+                                writeFileSync(profilesCreateFilePath, JSON.stringify(
+                                    profileType,
+                                    (key, value) => (key !== "handler") ? value : "",
+                                    2
+                                ));
                                 console.log("Profile " + profileSearching + " was found and saved to: " + resolve(profilesCreateFilePath));
                                 found++;
                                 break;
@@ -69,7 +84,11 @@ import { join, resolve } from "path";
                             if (profileType.name === profileSearching) {
                                 // We found the requested profile. Save it and break out of the inner loop.
                                 const profilesDeleteFilePath = join(profilesDeleteDirectory, profileSearching + ".json");
-                                writeFileSync(profilesDeleteFilePath, JSON.stringify(profileType, (key, value) => (key !== "handler") ? value : "", 2));
+                                writeFileSync(profilesDeleteFilePath, JSON.stringify(
+                                    profileType,
+                                    (key, value) => (key !== "handler") ? value : "",
+                                    2
+                                ));
                                 console.log("Profile " + profileSearching + " was found and saved to: " + resolve(profilesDeleteFilePath));
                                 found++;
                                 break;
@@ -82,7 +101,11 @@ import { join, resolve } from "path";
                                 // We found the requested profile. Save it and break out of the inner loop.
                                 // Yes, we add s, and that is intended.
                                 const profilesListFilePath = join(profilesListDirectory, profileSearching + ".json");
-                                writeFileSync(profilesListFilePath, JSON.stringify(profileType, (key, value) => (key !== "handler") ? value : "", 2));
+                                writeFileSync(profilesListFilePath, JSON.stringify(
+                                    profileType,
+                                    (key, value) => (key !== "handler") ? value : "",
+                                    2
+                                ));
                                 console.log("Profile " + profileSearching + " was found and saved to: " + resolve(profilesListFilePath));
                                 found++;
                                 break;
@@ -94,7 +117,11 @@ import { join, resolve } from "path";
                             if (profileType.name === profileSearching) {
                                 // We found the requested profile. Save it and break out of the inner loop.
                                 const profilesSetDefaultFilePath = join(profilesSetDefaultDirectory, profileSearching + ".json");
-                                writeFileSync(profilesSetDefaultFilePath, JSON.stringify(profileType, (key, value) => (key !== "handler") ? value : "", 2));
+                                writeFileSync(profilesSetDefaultFilePath, JSON.stringify(
+                                    profileType,
+                                    (key, value) => (key !== "handler") ? value : "",
+                                    2
+                                ));
                                 console.log("Profile " + profileSearching + " was found and saved to: " + resolve(profilesSetDefaultFilePath));
                                 found++;
                                 break;
@@ -106,7 +133,11 @@ import { join, resolve } from "path";
                             if (profileType.name === profileSearching) {
                                 // We found the requested profile. Save it and break out of the inner loop.
                                 const profilesUpdateFilePath = join(profilesUpdateDirectory, profileSearching + ".json");
-                                writeFileSync(profilesUpdateFilePath, JSON.stringify(profileType, (key, value) => (key !== "handler") ? value : "", 2));
+                                writeFileSync(profilesUpdateFilePath, JSON.stringify(
+                                    profileType,
+                                    (key, value) => (key !== "handler") ? value : "",
+                                    2
+                                ));
                                 console.log("Profile " + profileSearching + " was found and saved to: " + resolve(profilesUpdateFilePath));
                                 found++;
                                 break;
@@ -125,4 +156,4 @@ import { join, resolve } from "path";
 })().catch((error) => {
     console.log(error);
     process.exit(1);
-})
+});
