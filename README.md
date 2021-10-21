@@ -2,7 +2,7 @@
 
 ## About the Generator
 
-This proof of concept introduces some utilities that can be used to extract the command tree from the CLI and Plug-ins, store the relevant command groups for proprietary conformant plugins in a legal-approved way (without exposing proprietary code), and generate a web help with those plug-ins included on demand.
+This repository introduces some utilities that can be used to extract the command tree from the CLI and Plug-ins, store the relevant command groups for third party conformant plugins in a legal-approved way (without exposing proprietary code), and generate a web help with those plug-ins included on demand.
 
 ---
 
