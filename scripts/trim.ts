@@ -11,19 +11,34 @@
 
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 import { join, resolve } from "path";
+import { jsonc as JSONC } from 'jsonc';
+const wrap = require("word-wrap");
 
 (async() => {
     // Read and parse the files
     const zoweFile = join(__dirname, "..", "zowe.json");
-    const zoweFileJSON = JSON.parse(readFileSync(zoweFile).toString());
+    const zoweFileJSON = JSONC.parse(readFileSync(zoweFile).toString());
     const zoweTreeFile = join(__dirname, "..", "commandTree.json");
-    const zoweTreeFileJSON = JSON.parse(readFileSync(zoweTreeFile).toString());
+    const zoweTreeFileJSON = JSONC.parse(readFileSync(zoweTreeFile).toString());
     const commandTree = zoweTreeFileJSON.data;
     const commandGroups = zoweFileJSON.commandGroups;
     const profiles = zoweFileJSON.profiles;
 
     let commandGroupsFound = 0;
     let profilesFound = 0;
+
+    // Prepare to add copyrights to files
+    let copyright: string;
+    const copyrightPath = join(__dirname, "../", ".copyright");
+    const wrapOptions = {indent: "// ", width: 77, trim: true};
+    if (existsSync(copyrightPath)) {
+        console.log("A copyright was found and will be used on all created files.");
+        copyright = wrap(readFileSync(copyrightPath).toString(), wrapOptions);
+    } else {
+        const zoweCopyright = "Copyright Contributors to the Zowe Project.";
+        console.log("No copyright file found, using default Zowe Copyright.");
+        copyright = wrap(zoweCopyright, wrapOptions);
+    }
 
     // Set up the directories, make sure they exist.
     const commandGroupsDirectory = join(__dirname, "..", "commandGroups");
@@ -46,8 +61,8 @@ import { join, resolve } from "path";
         for (const commandGroup of commandTree.children) {
             if (commandGroup.name === commandGroupSearching) {
                 // We found the command group. Save it, and break out of the inner for loop.
-                const commandGroupFilePath = join(__dirname, "..", "commandGroups", commandGroupSearching + ".json");
-                writeFileSync(commandGroupFilePath, JSON.stringify(commandGroup, (key, value) => (key !== "handler") ? value : "", 2));
+                const commandGroupFilePath = join(__dirname, "..", "commandGroups", commandGroupSearching + ".jsonc");
+                commonWriteFileSync(commandGroupFilePath, commandGroup, copyright);
                 console.log("Command Group " + commandGroupSearching + " was found and saved to: " + resolve(commandGroupFilePath));
                 commandGroupsFound++;
                 break;
@@ -67,12 +82,8 @@ import { join, resolve } from "path";
                         for (const profileType of child.children) {
                             if (profileType.name === profileSearching) {
                                 // We found the requested profile. Save it and break out of the inner loop.
-                                const profilesCreateFilePath = join(profilesCreateDirectory, profileSearching + ".json");
-                                writeFileSync(profilesCreateFilePath, JSON.stringify(
-                                    profileType,
-                                    (key, value) => (key !== "handler") ? value : "",
-                                    2
-                                ));
+                                const profilesCreateFilePath = join(profilesCreateDirectory, profileSearching + ".jsonc");
+                                commonWriteFileSync(profilesCreateFilePath, profileType, copyright);
                                 console.log("Profile " + profileSearching + " was found and saved to: " + resolve(profilesCreateFilePath));
                                 found++;
                                 break;
@@ -83,12 +94,8 @@ import { join, resolve } from "path";
                         for (const profileType of child.children) {
                             if (profileType.name === profileSearching) {
                                 // We found the requested profile. Save it and break out of the inner loop.
-                                const profilesDeleteFilePath = join(profilesDeleteDirectory, profileSearching + ".json");
-                                writeFileSync(profilesDeleteFilePath, JSON.stringify(
-                                    profileType,
-                                    (key, value) => (key !== "handler") ? value : "",
-                                    2
-                                ));
+                                const profilesDeleteFilePath = join(profilesDeleteDirectory, profileSearching + ".jsonc");
+                                commonWriteFileSync(profilesDeleteFilePath, profileType, copyright);
                                 console.log("Profile " + profileSearching + " was found and saved to: " + resolve(profilesDeleteFilePath));
                                 found++;
                                 break;
@@ -100,12 +107,8 @@ import { join, resolve } from "path";
                             if (profileType.name === profileSearching + "s") {
                                 // We found the requested profile. Save it and break out of the inner loop.
                                 // Yes, we add s, and that is intended.
-                                const profilesListFilePath = join(profilesListDirectory, profileSearching + ".json");
-                                writeFileSync(profilesListFilePath, JSON.stringify(
-                                    profileType,
-                                    (key, value) => (key !== "handler") ? value : "",
-                                    2
-                                ));
+                                const profilesListFilePath = join(profilesListDirectory, profileSearching + ".jsonc");
+                                commonWriteFileSync(profilesListFilePath, profileType, copyright);
                                 console.log("Profile " + profileSearching + " was found and saved to: " + resolve(profilesListFilePath));
                                 found++;
                                 break;
@@ -116,12 +119,8 @@ import { join, resolve } from "path";
                         for (const profileType of child.children) {
                             if (profileType.name === profileSearching) {
                                 // We found the requested profile. Save it and break out of the inner loop.
-                                const profilesSetDefaultFilePath = join(profilesSetDefaultDirectory, profileSearching + ".json");
-                                writeFileSync(profilesSetDefaultFilePath, JSON.stringify(
-                                    profileType,
-                                    (key, value) => (key !== "handler") ? value : "",
-                                    2
-                                ));
+                                const profilesSetDefaultFilePath = join(profilesSetDefaultDirectory, profileSearching + ".jsonc");
+                                commonWriteFileSync(profilesSetDefaultFilePath, profileType, copyright);
                                 console.log("Profile " + profileSearching + " was found and saved to: " + resolve(profilesSetDefaultFilePath));
                                 found++;
                                 break;
@@ -132,12 +131,8 @@ import { join, resolve } from "path";
                         for (const profileType of child.children) {
                             if (profileType.name === profileSearching) {
                                 // We found the requested profile. Save it and break out of the inner loop.
-                                const profilesUpdateFilePath = join(profilesUpdateDirectory, profileSearching + ".json");
-                                writeFileSync(profilesUpdateFilePath, JSON.stringify(
-                                    profileType,
-                                    (key, value) => (key !== "handler") ? value : "",
-                                    2
-                                ));
+                                const profilesUpdateFilePath = join(profilesUpdateDirectory, profileSearching + ".jsonc");
+                                commonWriteFileSync(profilesUpdateFilePath, profileType, copyright);
                                 console.log("Profile " + profileSearching + " was found and saved to: " + resolve(profilesUpdateFilePath));
                                 found++;
                                 break;
@@ -157,3 +152,12 @@ import { join, resolve } from "path";
     console.log(error);
     process.exit(1);
 });
+
+function commonWriteFileSync(path: string, json: any, copyright: string) {
+    const data = copyright + "\n" + JSONC.stringify(
+        json,
+        (key, value) => (key !== "handler") ? value : "",
+        2
+    );
+    writeFileSync(path, data);
+}
