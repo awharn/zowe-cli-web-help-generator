@@ -26,26 +26,25 @@ jobs:
 
     - name: Install Node Package Dependencies
       id: install
-      run: npm ci
+      run: npm i --prod
 
     - name: Setup zowe.json file
       id: setup
       run: |
         jq '.commandGroups=["zos-files","zos-jobs"]' template/zowe.template.json > zowe.json
         echo "$(jq '.profiles=["zosmf-profile", "base-profile"]' zowe.json)" > zowe.json
-        cat zowe.json
         npm run contribute
 
     - name: Get Zowe version
       id: get-version
       run: |
         curl -s https://raw.githubusercontent.com/zowe/zowe-cli-standalone-package/master/zowe-versions.yaml > __zowe__version__
-        echo "::set-output name=number::$(cat __zowe__version__ | grep zowe: | cut -d ':' -f 2)"
+        echo "::set-output name=number::$([[ $(cat __zowe__version__ | grep zowe:) != "" ]] && (cat __zowe__version__ | grep zowe: | cut -d ':' -f 2) || echo 'CLI_v'$(npx zowe --version))"
         rm __zowe__version__
 
     - name: Build Source
       id: build
-      run: npm run build:local -- ${{ github.event.inputs.zowe-version || steps.get-version.outputs.number || '__ERROR__' }}
+      run: npm run build:local -- ${{ github.event.inputs.zowe-version || steps.get-version.outputs.number }}
 
     - name: Archive Results
       id: upload
@@ -54,8 +53,4 @@ jobs:
       with:
         name: results
         path: |
-          commandTree.json
-          zowe.json
           generatedWebHelp/
-          commandGroups/
-          profiles/

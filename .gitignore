@@ -4,3 +4,4 @@ node_modules/
 commandTree.json
 zowe.json
 tsconfig.tsbuildinfo
+package-lock.json
