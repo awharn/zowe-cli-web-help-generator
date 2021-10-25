@@ -17,11 +17,11 @@ To install the necessary components, run `npm install`. For a minimal install, t
 To add your conformant plug-in's commands, please perform the following steps:
 
 1. Ensure the plug-in that you would like to contribute to the Web Help is installed in Zowe CLI. You can use `npx zowe plugins install <plugin name or path here>` if you do not have a globally installed Zowe CLI available.
-2. Copy the template file `zowe.template.json` in the `template` directory to `zowe.json` in the root of the project. This file is ignored by git. Customize this file to include the command group(s) of your plugin(s), and the name(s) of your profile(s), like the following:
+2. Copy the template file `zowe.template.json` to `zowe.json` in the root of the project. This file is ignored by git. Customize this file to include the full names of command group(s) of your plugin(s), and the name(s) of your plugin's profile(s), like the following:
 
         {
           "commandGroups": ["zos-files", "zos-jobs"],
-          "profiles": ["zosmf-profile", "base-profile"]
+          "profiles": ["zosmf", "base"]
         }
     *Note: No @zowe scoped plug-ins should be included in this repository, and the above is merely for demonstration purposes.*
 
