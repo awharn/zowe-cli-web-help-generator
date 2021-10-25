@@ -42,9 +42,13 @@ jobs:
         echo "::set-output name=number::$([[ $(cat __zowe__version__ | grep zowe:) != "" ]] && (cat __zowe__version__ | grep zowe: | cut -d ':' -f 2) || echo 'CLI_v'$(npx zowe --version))"
         rm __zowe__version__
 
-    - name: Build Source
+    - name: Build Web Help
       id: build
-      run: npm run build:local -- ${{ github.event.inputs.zowe-version || steps.get-version.outputs.number }}
+      run: |
+        npm run build:local -- ${{ github.event.inputs.zowe-version || steps.get-version.outputs.number }}
+        npm install -g puppeteer-cli
+        export margin="0.4in"
+        puppeteer print ./generatedWebHelp/docs/all.html ./zowe.pdf --margin-top $margin --margin-right $margin --margin-bottom $margin --margin-left $margin --no-sandbox 
 
     - name: Archive Results
       id: upload
@@ -54,3 +58,4 @@ jobs:
         name: results
         path: |
           generatedWebHelp/
+          zowe.pdf

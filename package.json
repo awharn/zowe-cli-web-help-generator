@@ -39,9 +39,11 @@
         "@types/node": "^16.11.1",
         "@zowe/cli": "6.36.0",
         "@zowe/imperative": "4.17.0",
-        "husky": "^7.0.4",
-        "ts-node": "10.3.0",
-        "typescript": "^4.4.4"
+        "husky": "^7.0.2",
+        "jsonc": "^2.0.0",
+        "ts-node": "^10.3.0",
+        "typescript": "^4.4.4",
+        "word-wrap": "^1.2.3"
     },
     "devDependencies": {
         "@typescript-eslint/eslint-plugin": "^4.29.0",

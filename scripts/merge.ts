@@ -11,6 +11,7 @@
 
 import { readdirSync, readFileSync, writeFileSync } from "fs";
 import { join } from "path";
+import { jsonc as JSONC } from 'jsonc';
 
 (async() => {
     // Set up directories
@@ -24,13 +25,13 @@ import { join } from "path";
     const profilesUpdateDirectory = join(profilesDirectory, "update");
 
     // Read the file
-    const zoweTreeFileJSON = JSON.parse(readFileSync(zoweTreeFile).toString());
+    const zoweTreeFileJSON = JSONC.parse(readFileSync(zoweTreeFile).toString());
     const commandTree = zoweTreeFileJSON.data;
 
     // Add the missing command groups
     const commandGroupsFiles = readdirSync(commandGroupsDirectory);
     for (const file of commandGroupsFiles) {
-        const commandGroup = JSON.parse(readFileSync(join(commandGroupsDirectory, file)).toString());
+        const commandGroup = JSONC.parse(readFileSync(join(commandGroupsDirectory, file)).toString());
         let conflict = false;
         for (const compareGroup of commandTree.children) {
             if (compareGroup.name === commandGroup.name) { conflict = true; }
@@ -51,7 +52,7 @@ import { join } from "path";
                 if (child.name === "create") {
                     const files = readdirSync(profilesCreateDirectory);
                     for (const file of files) {
-                        const profile = JSON.parse(readFileSync(join(profilesCreateDirectory, file)).toString());
+                        const profile = JSONC.parse(readFileSync(join(profilesCreateDirectory, file)).toString());
                         let conflict = false;
                         for (const compareProfile of child.children) {
                             if (profile.name === compareProfile.name) { conflict = true; }
@@ -66,7 +67,7 @@ import { join } from "path";
                 } else if (child.name === "delete") {
                     const files = readdirSync(profilesDeleteDirectory);
                     for (const file of files) {
-                        const profile = JSON.parse(readFileSync(join(profilesDeleteDirectory, file)).toString());
+                        const profile = JSONC.parse(readFileSync(join(profilesDeleteDirectory, file)).toString());
                         let conflict = false;
                         for (const compareProfile of child.children) {
                             if (profile.name === compareProfile.name) { conflict = true; }
@@ -81,7 +82,7 @@ import { join } from "path";
                 } else if (child.name === "list") {
                     const files = readdirSync(profilesListDirectory);
                     for (const file of files) {
-                        const profile = JSON.parse(readFileSync(join(profilesListDirectory, file)).toString());
+                        const profile = JSONC.parse(readFileSync(join(profilesListDirectory, file)).toString());
                         let conflict = false;
                         for (const compareProfile of child.children) {
                             if (profile.name === compareProfile.name) { conflict = true; }
@@ -96,7 +97,7 @@ import { join } from "path";
                 } else if (child.name === "set-default") {
                     const files = readdirSync(profilesSetDefaultDirectory);
                     for (const file of files) {
-                        const profile = JSON.parse(readFileSync(join(profilesSetDefaultDirectory, file)).toString());
+                        const profile = JSONC.parse(readFileSync(join(profilesSetDefaultDirectory, file)).toString());
                         let conflict = false;
                         for (const compareProfile of child.children) {
                             if (profile.name === compareProfile.name) { conflict = true; }
@@ -111,7 +112,7 @@ import { join } from "path";
                 } else if (child.name === "update") {
                     const files = readdirSync(profilesUpdateDirectory);
                     for (const file of files) {
-                        const profile = JSON.parse(readFileSync(join(profilesUpdateDirectory, file)).toString());
+                        const profile = JSONC.parse(readFileSync(join(profilesUpdateDirectory, file)).toString());
                         let conflict = false;
                         for (const compareProfile of child.children) {
                             if (profile.name === compareProfile.name) { conflict = true; }
@@ -130,7 +131,7 @@ import { join } from "path";
 
     // Write data back to file
     zoweTreeFileJSON.data = commandTree;
-    const dataToWrite = JSON.stringify(zoweTreeFileJSON, (key, value) => (key !== "handler") ? value : "", 2);
+    const dataToWrite = JSONC.stringify(zoweTreeFileJSON, (key, value) => (key !== "handler") ? value : "", 2);
     writeFileSync(zoweTreeFile, dataToWrite);
 })().catch((error) => {
     console.log(error);
