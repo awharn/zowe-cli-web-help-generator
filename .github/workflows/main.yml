@@ -31,7 +31,7 @@ jobs:
     - name: Setup zowe.json file
       id: setup
       run: |
-        jq '.commandGroups=["zos-files","zos-jobs"]' template/zowe.template.json > zowe.json
+        jq '.commandGroups=["zos-files","zos-jobs"]' zowe.template.json > zowe.json
         echo "$(jq '.profiles=["zosmf-profile", "base-profile"]' zowe.json)" > zowe.json
         npm run contribute
 
