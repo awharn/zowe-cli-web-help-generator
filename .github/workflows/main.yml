@@ -83,8 +83,8 @@ jobs:
     - name: Build Web Help
       id: build
       run: |
-        which zowe
-        zowe --version
+        which zowe || true
+        zowe --version || true
         npm run build:local -- ${{ github.event.inputs.zowe-version || steps.get-version.outputs.number }}
         export margin="0.4in"
         puppeteer print ./generatedWebHelp/docs/all.html ./zowe.pdf --margin-top $margin --margin-right $margin --margin-bottom $margin --margin-left $margin --no-sandbox 
