@@ -60,7 +60,7 @@ jobs:
 
     - name: Get Zowe version
       id: get-version
-      if: ${{ steps.get-version-from-workflow.outcome == "skipped" }}
+      if: ${{ steps.get-version-from-workflow.outcome == 'skipped' }}
       run: |
         curl -s https://raw.githubusercontent.com/zowe/zowe-cli-standalone-package/master/zowe-versions.yaml > __zowe__version__
         echo "::set-output name=number::$([[ $(cat __zowe__version__ | grep zowe:) != "" ]] && (cat __zowe__version__ | grep zowe: | cut -d ':' -f 2) || echo 'CLI_v'$(npx zowe --version))"
@@ -68,7 +68,7 @@ jobs:
     
     - name: Set Up Zowe
       id: setup-zowe
-      if: ${{ steps.get-version-from-workflow.outcome == "skipped" }}
+      if: ${{ steps.get-version-from-workflow.outcome == 'skipped' }}
       run: |
         npm install -g @zowe/cli@zowe-v1-lts
         zowe plugins install @zowe/cics-for-zowe-cli@zowe-v1-lts
