@@ -17,15 +17,15 @@ jobs:
       with:
         node-version: lts/*
 
+    - name: Setup .npmrc
+      id: setup-npmrc
+      run: npm config set @zowe:registry=https://zowe.jfrog.io/zowe/api/npm/npm-local-release/
+
     - name: Install Node Package Dependencies
       id: install-node
       run: | 
         npm i --prod
         npm install -g puppeteer-cli
-
-    - name: Setup .npmrc
-      id: setup-npmrc
-      run: npm config set @zowe:registry=https://zowe.jfrog.io/zowe/api/npm/npm-local-release/
 
     - name: Set Up Zowe
       id: setup-zowe
