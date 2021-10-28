@@ -30,6 +30,11 @@ jobs:
         npm i --prod
         npm install -g puppeteer-cli
 
+    - name: Install PIP Dependencies
+      id: install-pip
+      if: ${{ github.event.inputs.zowe-version && github.event.inputs.zowe-version != ''}}
+      run: pip3 install yq
+
     - name: Setup .npmrc
       id: setup-npmrc
       run: npm config set @zowe:registry=https://zowe.jfrog.io/zowe/api/npm/npm-local-release/
