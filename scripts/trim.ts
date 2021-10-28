@@ -71,6 +71,7 @@ const wrap = require("word-wrap");
     }
 
     // Save the profiles
+    const profileSuffix = "-profile";
     for (const profileSearching of profiles) {
         let found = 0;
         for (const commandGroup of commandTree.children) {
@@ -80,7 +81,7 @@ const wrap = require("word-wrap");
                     if (child.name === "create") {
                         // Profiles create
                         for (const profileType of child.children) {
-                            if (profileType.name === profileSearching) {
+                            if (profileType.name === profileSearching + profileSuffix) {
                                 // We found the requested profile. Save it and break out of the inner loop.
                                 const profilesCreateFilePath = join(profilesCreateDirectory, profileSearching + ".jsonc");
                                 commonWriteFileSync(profilesCreateFilePath, profileType, copyright);
@@ -92,7 +93,7 @@ const wrap = require("word-wrap");
                     } else if (child.name === "delete") {
                         // Profiles delete
                         for (const profileType of child.children) {
-                            if (profileType.name === profileSearching) {
+                            if (profileType.name === profileSearching + profileSuffix) {
                                 // We found the requested profile. Save it and break out of the inner loop.
                                 const profilesDeleteFilePath = join(profilesDeleteDirectory, profileSearching + ".jsonc");
                                 commonWriteFileSync(profilesDeleteFilePath, profileType, copyright);
@@ -104,7 +105,7 @@ const wrap = require("word-wrap");
                     } else if (child.name === "list") {
                         // Profiles list
                         for (const profileType of child.children) {
-                            if (profileType.name === profileSearching + "s") {
+                            if (profileType.name === profileSearching + profileSuffix + "s") {
                                 // We found the requested profile. Save it and break out of the inner loop.
                                 // Yes, we add s, and that is intended.
                                 const profilesListFilePath = join(profilesListDirectory, profileSearching + ".jsonc");
@@ -117,7 +118,7 @@ const wrap = require("word-wrap");
                     } else if (child.name === "set-default") {
                         // Profiles set-default
                         for (const profileType of child.children) {
-                            if (profileType.name === profileSearching) {
+                            if (profileType.name === profileSearching + profileSuffix) {
                                 // We found the requested profile. Save it and break out of the inner loop.
                                 const profilesSetDefaultFilePath = join(profilesSetDefaultDirectory, profileSearching + ".jsonc");
                                 commonWriteFileSync(profilesSetDefaultFilePath, profileType, copyright);
@@ -129,7 +130,7 @@ const wrap = require("word-wrap");
                     } else if (child.name === "update") {
                         // Profiles update
                         for (const profileType of child.children) {
-                            if (profileType.name === profileSearching) {
+                            if (profileType.name === profileSearching + profileSuffix) {
                                 // We found the requested profile. Save it and break out of the inner loop.
                                 const profilesUpdateFilePath = join(profilesUpdateDirectory, profileSearching + ".jsonc");
                                 commonWriteFileSync(profilesUpdateFilePath, profileType, copyright);
