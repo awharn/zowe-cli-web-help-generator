@@ -1,4 +1,4 @@
-# Zowe Web Help Generator
+# Zowe CLI Web Help Generator
 
 ## About the Generator
 
