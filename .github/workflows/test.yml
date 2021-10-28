@@ -48,7 +48,7 @@ jobs:
       id: setup
       run: |
         jq '.commandGroups=["cics","db2","ims","mq","secure-credential-store","zos-ftp"]' zowe.template.json > zowe.json
-        echo "$(jq '.profiles=["zosmf", "base"]' zowe.json)" > zowe.json
+        echo "$(jq '.profiles=["cics", "db2","ims","mq","zftp"]' zowe.json)" > zowe.json
         npm run contribute
     
     - name: Teardown Zowe Plugins
