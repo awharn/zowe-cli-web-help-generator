@@ -26,7 +26,9 @@ jobs:
 
     - name: Install Node Package Dependencies
       id: install-node
-      run: npm i --prod
+      run: | 
+        npm i --prod
+        npm install -g puppeteer-cli
 
     - name: Install PIP Dependencies
       id: install-pip
@@ -81,8 +83,9 @@ jobs:
     - name: Build Web Help
       id: build
       run: |
+        which zowe
+        zowe --version
         npm run build:local -- ${{ github.event.inputs.zowe-version || steps.get-version.outputs.number }}
-        npm install -g puppeteer-cli
         export margin="0.4in"
         puppeteer print ./generatedWebHelp/docs/all.html ./zowe.pdf --margin-top $margin --margin-right $margin --margin-bottom $margin --margin-left $margin --no-sandbox 
 
