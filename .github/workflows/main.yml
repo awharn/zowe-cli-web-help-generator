@@ -25,8 +25,17 @@ jobs:
         node-version: lts/*
 
     - name: Install Node Package Dependencies
-      id: install
+      id: install-node
       run: npm i --prod
+
+    - name: Install PIP Dependencies
+      id: install-pip
+      if: ${{ github.event.inputs.zowe-version && github.event.inputs.zowe-version != ''}}
+      run: pip3 install yq
+
+    - name: Setup .npmrc
+      id: setup-npmrc
+      run: npm config set @zowe:registry=https://zowe.jfrog.io/zowe/api/npm/npm-local-release/
 
     - name: Setup zowe.json file
       id: setup
@@ -35,12 +44,39 @@ jobs:
         echo "$(jq '.profiles=["zosmf-profile", "base-profile"]' zowe.json)" > zowe.json
         npm run contribute
 
+    - name: Set up Zowe from Versions
+      id: get-version-from-workflow
+      if: ${{ github.event.inputs.zowe-version && github.event.inputs.zowe-version != ''}}
+      run: |
+        curl -s https://raw.githubusercontent.com/zowe/zowe-cli-standalone-package/${{ github.event.inputs.zowe-version }}/zowe-versions.yaml > __zowe__version__
+        npm install -g @zowe/cli@$(yq '.["zowe-cli"].cli' __zowe__version__)
+        zowe plugins install @zowe/cics-for-zowe-cli@$(yq '.["zowe-plugins"].cics' __zowe__version__)
+        zowe plugins install @zowe/db2-for-zowe-cli@$(yq '.["zowe-plugins"].db2' __zowe__version__)
+        zowe plugins install @zowe/ims-for-zowe-cli@$(yq '.["zowe-plugins"].ims' __zowe__version__)
+        zowe plugins install @zowe/mq-for-zowe-cli@$(yq '.["zowe-plugins"].mq' __zowe__version__)
+        zowe plugins install @zowe/secure-credential-store-for-zowe-cli@$(yq '.["zowe-plugins"].["secure-credential-store"]' __zowe__version__)
+        zowe plugins install @zowe/zos-ftp-for-zowe-cli@$(yq '.["zowe-plugins"].["zos-ftp"]' __zowe__version__)
+        rm __zowe__version__
+
     - name: Get Zowe version
       id: get-version
+      if: ${{ steps.get-version-from-workflow.outcome == "skipped" }}
       run: |
         curl -s https://raw.githubusercontent.com/zowe/zowe-cli-standalone-package/master/zowe-versions.yaml > __zowe__version__
         echo "::set-output name=number::$([[ $(cat __zowe__version__ | grep zowe:) != "" ]] && (cat __zowe__version__ | grep zowe: | cut -d ':' -f 2) || echo 'CLI_v'$(npx zowe --version))"
         rm __zowe__version__
+    
+    - name: Set Up Zowe
+      id: setup-zowe
+      if: ${{ steps.get-version-from-workflow.outcome == "skipped" }}
+      run: |
+        npm install -g @zowe/cli@zowe-v1-lts
+        zowe plugins install @zowe/cics-for-zowe-cli@zowe-v1-lts
+        zowe plugins install @zowe/db2-for-zowe-cli@zowe-v1-lts
+        zowe plugins install @zowe/ims-for-zowe-cli@zowe-v1-lts
+        zowe plugins install @zowe/mq-for-zowe-cli@zowe-v1-lts
+        zowe plugins install @zowe/secure-credential-store-for-zowe-cli@zowe-v1-lts
+        zowe plugins install @zowe/zos-ftp-for-zowe-cli@zowe-v1-lts
 
     - name: Build Web Help
       id: build
