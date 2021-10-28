@@ -48,7 +48,7 @@ jobs:
       id: get-version-from-workflow
       if: ${{ github.event.inputs.zowe-version && github.event.inputs.zowe-version != ''}}
       run: |
-        curl -s https://raw.githubusercontent.com/zowe/zowe-cli-standalone-package/${{ github.event.inputs.zowe-version }}/zowe-versions.yaml > __zowe__version__
+        curl -s https://raw.githubusercontent.com/zowe/zowe-cli-standalone-package/${{ github.event.inputs.zowe-version }}/master/zowe-versions.yaml > __zowe__version__
         npm install -g @zowe/cli@$(yq '.["zowe-cli"].cli' __zowe__version__)
         zowe plugins install @zowe/cics-for-zowe-cli@$(yq '.["zowe-plugins"].cics' __zowe__version__)
         zowe plugins install @zowe/db2-for-zowe-cli@$(yq '.["zowe-plugins"].db2' __zowe__version__)
